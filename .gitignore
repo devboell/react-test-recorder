@@ -1,0 +1,7 @@
+# OS artifacts
+.DS_Store
+
+# Node.js/NPM stuff
+node_modules/
+*.log
+npm-debug.log*
