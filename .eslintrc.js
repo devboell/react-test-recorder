@@ -1,20 +1,20 @@
 module.exports = {
-  extends: ["airbnb", "prettier"],
-  plugins: ["prettier"],
+  extends: ['airbnb', 'prettier'],
+  plugins: ['prettier'],
   parserOptions: {
     ecmaVersion: 8,
-    sourceType: "module",
-    jsx: true
+    sourceType: 'module',
+    jsx: true,
   },
   rules: {
-    semi: ["error", "never"]
+    semi: ['error', 'never'],
     //  "global-require": ["off"],
     //  "no-plusplus": ["off"],
     //  "arrow-parens": ["error", "as-needed"],
     //  "no-restricted-syntax": ["off"],
     //  "no-console": ["warn", { allow: ["error"] }],
     //  "no-continue": ["off"],
-    //  "import/no-unresolved": [2, {}],
+    // 'import/no-unresolved': [2, {}],
     //  "import/prefer-default-export": ["off"],
     //  "import/no-named-as-default": ["off"],
     //  "import/no-named-as-default-member": ["off"],
@@ -33,13 +33,14 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
-    jest: true
+    jest: true,
   },
   settings: {
-    "import/resolver": {
+    'import/resolver': {
+      node: {},
       webpack: {
-        config: "webpack.common.js"
-      }
-    }
-  }
-};
+        config: 'webpack.config.js',
+      },
+    },
+  },
+}
