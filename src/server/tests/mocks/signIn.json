@@ -1,0 +1,324 @@
+[
+  {
+    "trigger": "uievent",
+    "type": "click",
+    "testid": "button-signin"
+  },
+  {
+    "trigger": "fetch",
+    "request": [
+      "http://localhost:4000/projects/summaries?&page=1&perPage=10&sort=name&order=asc",
+      {
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiNWQxMDg0OWRlZDhlZDAwNzkzNmE0ZDBiIiwiaWF0IjoxNTc4NDcxNzE4LCJleHAiOjE1OTQwMjM3MTh9.w9trQ9b8Al_AzMd1jqO4u5CXdpMnk2Nz0szoCTAS39w"
+        }
+      }
+    ],
+    "response": {
+      "json": {
+        "projects": [
+          {
+            "_id": "5dc2e227f3e0ca0067c4cf5a",
+            "name": "BookSpot",
+            "programName": "BookSpot vriendenvoordeel",
+            "slug": "bookspot",
+            "plan": {
+              "name": "starter"
+            }
+          },
+          {
+            "_id": "55c85351218c7a393f6631cb",
+            "slug": "brand-new-day",
+            "programName": "Brand New Day Vriendenvoordeel",
+            "name": "Brand New Day",
+            "plan": {
+              "name": "enterprise"
+            }
+          },
+          {
+            "_id": "5cdaa897edc42c006b248972",
+            "name": "Brand New Day Zakelijk",
+            "programName": "Brand New Day Ambassadeurs",
+            "slug": "bnd-zakelijk",
+            "plan": {
+              "name": "starter"
+            }
+          },
+          {
+            "_id": "5d36efef6eeccc0021b9766a",
+            "name": "BrightPensioen",
+            "programName": "BrightPensioen Delen voor Aandelen",
+            "slug": "brightpensioen",
+            "plan": {
+              "name": "starter"
+            }
+          },
+          {
+            "_id": "5d5e8117e360a2004a8d9f87",
+            "name": "Charlie Temple",
+            "programName": "Charlie Temple Vriendenvoordeel",
+            "slug": "charlietemple",
+            "plan": {
+              "name": "starter"
+            }
+          },
+          {
+            "_id": "5e414ad067e05b005c0b96fd",
+            "name": "Charlie Temple DE",
+            "programName": "Charlie Temple freunde werben freunde",
+            "slug": "charlietemplede",
+            "plan": {
+              "name": "starter"
+            }
+          },
+          {
+            "_id": "59b7bfb3b080fd00171e57b7",
+            "name": "ENGIE",
+            "programName": "ENGIE VriendenVoordeel",
+            "slug": "engie",
+            "plan": {
+              "name": "enterprise"
+            }
+          },
+          {
+            "_id": "5aa148112389874a91f6fc4f",
+            "name": "Essent",
+            "slug": "essent",
+            "programName": "Essent Vriendenvoordeel",
+            "plan": {
+              "name": "enterprise"
+            }
+          },
+          {
+            "_id": "5a5cb0faca314100169e2d85",
+            "name": "Fitchannel.com",
+            "programName": "Fitchannel.com Vriendenvoordeel",
+            "slug": "fitchannel",
+            "plan": {
+              "name": "starter"
+            }
+          },
+          {
+            "_id": "5bab8bfa869c6800211e8987",
+            "name": "Greenchoice",
+            "programName": "Greenchoice Vriendenvoordeel",
+            "slug": "greenchoice",
+            "plan": {
+              "name": "enterprise"
+            }
+          }
+        ],
+        "totalCount": 28
+      }
+    }
+  },
+  {
+    "trigger": "fetch",
+    "request": [
+      "http://localhost:4000/projects/summaries?page=1&perPage=0",
+      {
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiNWQxMDg0OWRlZDhlZDAwNzkzNmE0ZDBiIiwiaWF0IjoxNTc4NDcxNzE4LCJleHAiOjE1OTQwMjM3MTh9.w9trQ9b8Al_AzMd1jqO4u5CXdpMnk2Nz0szoCTAS39w"
+        }
+      }
+    ],
+    "response": {
+      "json": {
+        "projects": [
+          {
+            "_id": "5cd034b3c2871700c3bc4b9d",
+            "name": "srprs.me",
+            "programName": "srprs.me Vriendenvoordeel",
+            "slug": "srprsme"
+          },
+          {
+            "_id": "5d822a425a5f9f001abc307c",
+            "name": "Sungevity België",
+            "programName": "Sungevity vriendenvoordeel",
+            "slug": "sungevity-be"
+          },
+          {
+            "_id": "59b7bfb3b080fd00171e57b7",
+            "name": "ENGIE",
+            "programName": "ENGIE VriendenVoordeel",
+            "slug": "engie",
+            "plan": {
+              "name": "enterprise"
+            }
+          },
+          {
+            "_id": "5d36efef6eeccc0021b9766a",
+            "name": "BrightPensioen",
+            "programName": "BrightPensioen Delen voor Aandelen",
+            "slug": "brightpensioen",
+            "plan": {
+              "name": "starter"
+            }
+          },
+          {
+            "_id": "5d81fb4f6960cc0021b7d90a",
+            "name": "Sungevity Wallonië",
+            "programName": "L'avantage Amis Sungevity",
+            "slug": "sungevity-be-wl"
+          },
+          {
+            "_id": "5bab8bfa869c6800211e8987",
+            "name": "Greenchoice",
+            "programName": "Greenchoice Vriendenvoordeel",
+            "slug": "greenchoice",
+            "plan": {
+              "name": "enterprise"
+            }
+          },
+          {
+            "_id": "5c8a4a62f3dfd20023164240",
+            "name": "KNLTB",
+            "programName": "KNLTB Vriendenactie",
+            "slug": "knltb",
+            "plan": {
+              "name": "starter"
+            }
+          },
+          {
+            "_id": "5718bf83e2c1e41c0056b84e",
+            "name": "Vrienden Member Get Member Company",
+            "slug": "mgm",
+            "programName": "vrienden"
+          },
+          {
+            "_id": "5cdaa897edc42c006b248972",
+            "name": "Brand New Day Zakelijk",
+            "programName": "Brand New Day Ambassadeurs",
+            "slug": "bnd-zakelijk",
+            "plan": {
+              "name": "starter"
+            }
+          },
+          {
+            "_id": "5a5cb0faca314100169e2d85",
+            "name": "Fitchannel.com",
+            "programName": "Fitchannel.com Vriendenvoordeel",
+            "slug": "fitchannel",
+            "plan": {
+              "name": "starter"
+            }
+          },
+          {
+            "_id": "5d5e8117e360a2004a8d9f87",
+            "name": "Charlie Temple",
+            "programName": "Charlie Temple Vriendenvoordeel",
+            "slug": "charlietemple",
+            "plan": {
+              "name": "starter"
+            }
+          },
+          {
+            "_id": "5d80b9a72bce1c010659d121",
+            "name": "Starred",
+            "programName": "Starred Referrals",
+            "slug": "starred"
+          },
+          {
+            "_id": "5ba10b307ceb4c00160c46b5",
+            "name": "HalloStroom",
+            "programName": "HalloStroom vriendenvoordeel",
+            "slug": "hallostroom",
+            "plan": {
+              "name": "starter"
+            }
+          },
+          {
+            "_id": "5d8229e26960cc0021b7d98e",
+            "name": "Sungevity",
+            "programName": "Sungevity vriendenvoordeel",
+            "slug": "sungevity",
+            "plan": {
+              "name": "enterprise"
+            }
+          },
+          {
+            "_id": "59b6752b290a8d00179f2b5d",
+            "plan": {
+              "name": "enterprise"
+            },
+            "name": "Tele2",
+            "slug": "tele2",
+            "programName": "Tele2 Vriendenvoordeel"
+          },
+          {
+            "_id": "55c85351218c7a393f6631cb",
+            "slug": "brand-new-day",
+            "programName": "Brand New Day Vriendenvoordeel",
+            "name": "Brand New Day",
+            "plan": {
+              "name": "enterprise"
+            }
+          },
+          {
+            "_id": "55c85351218c7a393f6631d4",
+            "slug": "energiedirect",
+            "programName": "energiedirect.nl Vriendenvoordeel",
+            "name": "energiedirect.nl",
+            "plan": {
+              "name": "enterprise"
+            }
+          },
+          {
+            "_id": "588b0b4ea87757001d65111b",
+            "name": "Vereniging Eigen Huis",
+            "programName": "Vereniging Eigen Huis vriendenvoordeel",
+            "slug": "eigenhuis",
+            "plan": {
+              "name": "enterprise"
+            }
+          },
+          {
+            "_id": "5aa148112389874a91f6fc4f",
+            "name": "Essent",
+            "slug": "essent",
+            "programName": "Essent Vriendenvoordeel",
+            "plan": {
+              "name": "enterprise"
+            }
+          },
+          {
+            "_id": "5d6cfd9d7af346001a9888dd",
+            "name": "Volero",
+            "programName": "Volero Vriendenvoordeel",
+            "slug": "volero",
+            "plan": {
+              "name": "starter"
+            }
+          }
+        ],
+        "totalCount": 28
+      }
+    }
+  },
+  {
+    "trigger": "fetch",
+    "request": [
+      "http://localhost:4000/auth/login?email=rob@membergetmember.co&password=P@ssw0rd",
+      {
+        "method": "POST",
+        "body": "{\"scope\":\"admin\"}",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiNWQxMDg0OWRlZDhlZDAwNzkzNmE0ZDBiIiwiaWF0IjoxNTc4NDcxNzE4LCJleHAiOjE1OTQwMjM3MTh9.w9trQ9b8Al_AzMd1jqO4u5CXdpMnk2Nz0szoCTAS39w"
+        }
+      }
+    ],
+    "response": {
+      "json": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiNWMzNzFhYzdlMGE3MmQwMDIzYzdlNGQwIiwiaWF0IjoxNTg1OTE4Nzk4LCJleHAiOjE2MDE0NzA3OTh9.bi6LPQR01pI-FUMMinHyDJ5KeSHVv2iBY93j5BWIlcw",
+        "user_id": "5c371ac7e0a72d0023c7e4d0",
+        "new_user": false,
+        "scope": "admin"
+      }
+    }
+  }
+]
