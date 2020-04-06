@@ -10,22 +10,28 @@ import reducer, {
 import fetchRelay from './fetch-step'
 import mouseTracker from './uievent-step'
 
-const Recorder = ({ children }) => {
+const Recorder = ({ enabled, children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const [fileName, setFileName] = useState('')
 
   useEffect(() => {
-    const windowFetch = window.fetch
-    window.fetch = fetchRelay(dispatch, windowFetch)
-    return () => {
-      window.fetch = windowFetch
+    if (enabled) {
+      const windowFetch = window.fetch
+      window.fetch = fetchRelay(dispatch, windowFetch)
+      return () => {
+        window.fetch = windowFetch
+      }
     }
+    return () => {} // not sure about this -- lint error fix
   }, [])
 
   useEffect(() => {
-    const Tracker = mouseTracker(dispatch)
-    document.addEventListener('click', Tracker)
-    return () => document.removeEventListener('click', Tracker)
+    if (enabled) {
+      const Tracker = mouseTracker(dispatch)
+      document.addEventListener('click', Tracker)
+      return () => document.removeEventListener('click', Tracker)
+    }
+    return () => {} // not sure about this -- lint error fix
   }, [])
 
   const startRecording = () => {
@@ -51,7 +57,7 @@ const Recorder = ({ children }) => {
   }
 
   const { isRecording } = state
-  return (
+  return enabled ? (
     <>
       <div>
         <button
@@ -80,10 +86,18 @@ const Recorder = ({ children }) => {
       </div>
       {children}
     </>
+  ) : (
+    <>{children}</>
   )
 }
 
 Recorder.propTypes = {
+  enabled: pt.bool,
   children: pt.node.isRequired,
 }
+
+Recorder.defaultProps = {
+  enabled: false,
+}
+
 export default Recorder
