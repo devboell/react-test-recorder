@@ -4,9 +4,12 @@ exports[`should  1`] = `
 "
   /* eslint-disable sonarjs/no-duplicate-string */
   import { render, fireEvent, wait } from '@testing-library/react'  
+  import { generateImage } from 'jsdom-screenshot'
   import { testProvider } from 'testProvider' 
   
-  it('runs the test', () => {
+  jest.setTimeout(30000)
+
+  it('runs the test', async () => {
     fetch
       .once(JSON.stringify({\\"projects\\":[{\\"_id\\":\\"5dc2e227f3e0ca0067c4cf5a\\",\\"name\\":\\"BookSpot\\",\\"programName\\":\\"BookSpot vriendenvoordeel\\",\\"slug\\":\\"bookspot\\",\\"plan\\":{\\"name\\":\\"starter\\"}},{\\"_id\\":\\"55c85351218c7a393f6631cb\\",\\"slug\\":\\"brand-new-day\\",\\"programName\\":\\"Brand New Day Vriendenvoordeel\\",\\"name\\":\\"Brand New Day\\",\\"plan\\":{\\"name\\":\\"enterprise\\"}},{\\"_id\\":\\"5cdaa897edc42c006b248972\\",\\"name\\":\\"Brand New Day Zakelijk\\",\\"programName\\":\\"Brand New Day Ambassadeurs\\",\\"slug\\":\\"bnd-zakelijk\\",\\"plan\\":{\\"name\\":\\"starter\\"}},{\\"_id\\":\\"5d36efef6eeccc0021b9766a\\",\\"name\\":\\"BrightPensioen\\",\\"programName\\":\\"BrightPensioen Delen voor Aandelen\\",\\"slug\\":\\"brightpensioen\\",\\"plan\\":{\\"name\\":\\"starter\\"}},{\\"_id\\":\\"5d5e8117e360a2004a8d9f87\\",\\"name\\":\\"Charlie Temple\\",\\"programName\\":\\"Charlie Temple Vriendenvoordeel\\",\\"slug\\":\\"charlietemple\\",\\"plan\\":{\\"name\\":\\"starter\\"}},{\\"_id\\":\\"5e414ad067e05b005c0b96fd\\",\\"name\\":\\"Charlie Temple DE\\",\\"programName\\":\\"Charlie Temple freunde werben freunde\\",\\"slug\\":\\"charlietemplede\\",\\"plan\\":{\\"name\\":\\"starter\\"}},{\\"_id\\":\\"59b7bfb3b080fd00171e57b7\\",\\"name\\":\\"ENGIE\\",\\"programName\\":\\"ENGIE VriendenVoordeel\\",\\"slug\\":\\"engie\\",\\"plan\\":{\\"name\\":\\"enterprise\\"}},{\\"_id\\":\\"5aa148112389874a91f6fc4f\\",\\"name\\":\\"Essent\\",\\"slug\\":\\"essent\\",\\"programName\\":\\"Essent Vriendenvoordeel\\",\\"plan\\":{\\"name\\":\\"enterprise\\"}},{\\"_id\\":\\"5a5cb0faca314100169e2d85\\",\\"name\\":\\"Fitchannel.com\\",\\"programName\\":\\"Fitchannel.com Vriendenvoordeel\\",\\"slug\\":\\"fitchannel\\",\\"plan\\":{\\"name\\":\\"starter\\"}},{\\"_id\\":\\"5bab8bfa869c6800211e8987\\",\\"name\\":\\"Greenchoice\\",\\"programName\\":\\"Greenchoice Vriendenvoordeel\\",\\"slug\\":\\"greenchoice\\",\\"plan\\":{\\"name\\":\\"enterprise\\"}}],\\"totalCount\\":28}), { headers: { 'Content-Type': 'application/json' } },
       )
@@ -19,15 +22,16 @@ exports[`should  1`] = `
   
     const buttonSignin = getByTestId('button-signin')
     fireEvent.click(buttonSignin)
-      
     await wait(() => {})
+  
     expect(fetch).toHaveBeenNthCalledWith(1, 'http://localhost:4000/projects/summaries?&page=1&perPage=10&sort=name&order=asc', {\\"method\\":\\"GET\\",\\"headers\\":{\\"Content-Type\\":\\"application/json\\",\\"Authorization\\":\\"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiNWQxMDg0OWRlZDhlZDAwNzkzNmE0ZDBiIiwiaWF0IjoxNTc4NDcxNzE4LCJleHAiOjE1OTQwMjM3MTh9.w9trQ9b8Al_AzMd1jqO4u5CXdpMnk2Nz0szoCTAS39w\\"}})
-      
     expect(fetch).toHaveBeenNthCalledWith(2, 'http://localhost:4000/projects/summaries?page=1&perPage=0', {\\"method\\":\\"GET\\",\\"headers\\":{\\"Content-Type\\":\\"application/json\\",\\"Authorization\\":\\"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiNWQxMDg0OWRlZDhlZDAwNzkzNmE0ZDBiIiwiaWF0IjoxNTc4NDcxNzE4LCJleHAiOjE1OTQwMjM3MTh9.w9trQ9b8Al_AzMd1jqO4u5CXdpMnk2Nz0szoCTAS39w\\"}})
-      
     expect(fetch).toHaveBeenNthCalledWith(3, 'http://localhost:4000/auth/login?email=rob@membergetmember.co&password=P@ssw0rd', {\\"method\\":\\"POST\\",\\"body\\":\\"{\\\\\\"scope\\\\\\":\\\\\\"admin\\\\\\"}\\",\\"headers\\":{\\"Content-Type\\":\\"application/json\\",\\"Authorization\\":\\"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiNWQxMDg0OWRlZDhlZDAwNzkzNmE0ZDBiIiwiaWF0IjoxNTc4NDcxNzE4LCJleHAiOjE1OTQwMjM3MTh9.w9trQ9b8Al_AzMd1jqO4u5CXdpMnk2Nz0szoCTAS39w\\"}})
-      
+
     expect(fetch).toHaveBeenCalledTimes(3)
+
+    const screenshot = await generateImage()
+    expect(screenshot).toMatchImageSnapshot()
 
     fetch.resetMocks()
   })
