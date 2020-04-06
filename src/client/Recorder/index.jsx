@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useState, useEffect, useReducer } from 'react'
 import pt from 'prop-types'
 
 import reducer, {
@@ -12,6 +12,7 @@ import mouseTracker from './uievent-step'
 
 const Recorder = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const [fileName, setFileName] = useState('')
 
   useEffect(() => {
     const windowFetch = window.fetch
@@ -28,6 +29,7 @@ const Recorder = ({ children }) => {
   }, [])
 
   const startRecording = () => {
+    setFileName('')
     dispatch(clearSteps())
     dispatch(toggleIsRecording())
   }
@@ -38,7 +40,10 @@ const Recorder = ({ children }) => {
 
     await window.fetch('http://localhost:2000/recording', {
       method: 'post',
-      body: JSON.stringify(state.steps),
+      body: JSON.stringify({
+        fileName,
+        recording: state.steps,
+      }),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -56,7 +61,15 @@ const Recorder = ({ children }) => {
         >
           start
         </button>
-        {isRecording ? 'RECORDING' : 'NOT RECORDING'}
+        {isRecording ? (
+          <input
+            type="text"
+            value={fileName}
+            onChange={(event) => setFileName(event.target.value)}
+          />
+        ) : (
+          'NOT RECORDING'
+        )}
         <button
           type="button"
           onClick={stopRecording}
