@@ -42,15 +42,16 @@ const Recorder = ({ enabled, children }) => {
 
   const stopRecording = async () => {
     dispatch(toggleIsRecording())
-    console.log('recording stopped', state.steps)
+    const recording = {
+      fetchRecords: state.fetchRecords,
+      eventRecords: state.eventRecords,
+    }
+    console.log('recording stopped', recording)
     await window.fetch('http://localhost:2000/recording', {
       method: 'post',
       body: JSON.stringify({
         fileName,
-        recording: {
-          fetchRecords: state.fetchRecords,
-          eventRecords: state.eventRecords,
-        },
+        recording,
       }),
       headers: {
         'Content-Type': 'application/json',
