@@ -3,52 +3,54 @@ import pt from 'prop-types'
 
 import reducer, {
   toggleIsRecording,
-  clearSteps,
+  // clearRecording,
   initialState,
 } from './reducer'
 
-import fetchRelay from './fetch-step'
-import mouseTracker from './uievent-step'
+import fetchIntercept from './fetchIntercept'
+import mouseTracker from './mouseTracker'
 
 const Recorder = ({ enabled, children }) => {
+  const [isInitialized, setIsInitialized] = useState(false)
+  // const [locationPath] = useState(window.location.pathname)
   const [state, dispatch] = useReducer(reducer, initialState)
   const [fileName, setFileName] = useState('')
 
-  useEffect(() => {
-    if (enabled) {
-      const windowFetch = window.fetch
-      window.fetch = fetchRelay(dispatch, windowFetch)
-      return () => {
-        window.fetch = windowFetch
-      }
-    }
-    return () => {} // not sure about this -- lint error fix
-  }, [])
+  let windowFetch
+  let Tracker
+  if (!isInitialized && enabled) {
+    // intercept fetch calls
+    windowFetch = window.fetch
+    window.fetch = fetchIntercept(dispatch, windowFetch)
 
-  useEffect(() => {
-    if (enabled) {
-      const Tracker = mouseTracker(dispatch)
-      document.addEventListener('click', Tracker)
-      return () => document.removeEventListener('click', Tracker)
-    }
-    return () => {} // not sure about this -- lint error fix
-  }, [])
+    // intercept ui events
+    Tracker = mouseTracker(dispatch)
+    document.addEventListener('click', Tracker)
 
-  const startRecording = () => {
-    setFileName('')
-    dispatch(clearSteps())
+    // init recorder
+    setIsInitialized(true)
     dispatch(toggleIsRecording())
   }
+
+  useEffect(() => {
+    // cleanup
+    return () => {
+      window.fetch = windowFetch
+      document.removeEventListener('click', Tracker)
+    }
+  }, [])
 
   const stopRecording = async () => {
     dispatch(toggleIsRecording())
     console.log('recording stopped', state.steps)
-
     await window.fetch('http://localhost:2000/recording', {
       method: 'post',
       body: JSON.stringify({
         fileName,
-        recording: state.steps,
+        recording: {
+          fetchRecords: state.fetchRecords,
+          eventRecords: state.eventRecords,
+        },
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -60,13 +62,6 @@ const Recorder = ({ enabled, children }) => {
   return enabled ? (
     <>
       <div>
-        <button
-          type="button"
-          onClick={startRecording}
-          disabled={isRecording}
-        >
-          start
-        </button>
         {isRecording ? (
           <input
             type="text"
@@ -101,3 +96,16 @@ Recorder.defaultProps = {
 }
 
 export default Recorder
+
+/*
+        <button
+          type="button"
+          onClick={() => {}} // {startRecording}
+          disabled={isRecording}
+        >
+          start
+        </button>
+*/
+/*
+ 
+*/

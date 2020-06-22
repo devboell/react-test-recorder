@@ -1,4 +1,4 @@
-import { createStep } from './reducer'
+import { createEventRecord } from './reducer'
 
 export default (dispatch) => (mouseEvent) => {
   const {
@@ -9,8 +9,7 @@ export default (dispatch) => (mouseEvent) => {
   } = mouseEvent
   if (testid)
     dispatch(
-      createStep({
-        trigger: 'uievent',
+      createEventRecord({
         type,
         testid,
       }),
