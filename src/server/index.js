@@ -21,4 +21,4 @@ app.post('/recording', (req, res) => {
   res.sendStatus(200)
 })
 
-app.listen(2000, () => console.log('server listening'))
+app.listen(2000, () => console.log('server listening, 2000'))

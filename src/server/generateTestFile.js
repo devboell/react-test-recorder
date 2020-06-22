@@ -1,8 +1,8 @@
-const fileImports = hasUiEvents => {
+const fileImports = (hasEvents) => {
   return `
   /* eslint-disable sonarjs/no-duplicate-string */
   import { render,${
-    hasUiEvents ? ' fireEvent,' : ''
+    hasEvents ? ' fireEvent,' : ''
   } wait } from '@testing-library/react'  
   import { generateImage } from 'jsdom-screenshot'
   import { testProvider } from 'testProvider'
@@ -11,32 +11,30 @@ const fileImports = hasUiEvents => {
   `
 }
 
-const fetchMocks = recording => {
+const fetchMocks = (fetchRecords) => {
   let result = ''
-  for (let i = 0; i < recording.length; i += 1) {
-    const step = recording[i]
-    if (step.trigger === 'fetch') {
-      result += `
+  for (let i = 0; i < fetchRecords.length; i += 1) {
+    const record = fetchRecords[i]
+    result += `
       .once(JSON.stringify(${JSON.stringify(
-        step.response.json,
+        record.response.json,
       )}), { headers: { 'Content-Type': 'application/json' } })`
-    }
   }
   return result
 }
 
-const capitalize = string =>
+const capitalize = (string) =>
   string.charAt(0).toUpperCase() + string.slice(1)
 
-const testidToCamel = testid =>
+const testidToCamel = (testid) =>
   testid
     .split('-')
     .map((part, idx) => (idx === 0 ? part : capitalize(part)))
     .join('')
 
-const fireEvents = steps => {
+const fireEvents = (steps) => {
   let result = ''
-  steps.forEach(step => {
+  steps.forEach((step) => {
     result += `
     await wait(() => {
       const ${testidToCamel(step.testid)} = getByTestId('${
@@ -48,23 +46,21 @@ const fireEvents = steps => {
   return result
 }
 
-const fetchCalls = steps => {
+const fetchCalls = (steps) => {
   let result = `
   `
   steps.forEach((step, idx) => {
     const [url, payload] = step.request
 
     result += `
-    expect(fetch).toHaveBeenNthCalledWith(${idx +
-      1}, '${url}', ${JSON.stringify(payload)})`
+    expect(fetch).toHaveBeenNthCalledWith(${
+      idx + 1
+    }, '${url}', ${JSON.stringify(payload)})`
   })
   return result
 }
 
-const propEquals = (propName, propValue) => obj =>
-  obj[propName] === propValue
-
-const history = path => `
+const history = (path) => `
   const history = createBrowserHistory()
   history.push('${path}')
 
@@ -85,13 +81,11 @@ const storage = () => {
   `
 }
 const fileContents = (recording, locationPath) => {
-  const uiEventSteps = recording.filter(
-    propEquals('trigger', 'uievent'),
-  )
-  const fetchSteps = recording.filter(propEquals('trigger', 'fetch'))
-  const hasUiEvents = uiEventSteps.length > 0
+  const { fetchRecords, eventRecords } = recording
 
-  let contents = fileImports(hasUiEvents)
+  const hasEvents = eventRecords.length > 0
+
+  let contents = fileImports(hasEvents)
 
   contents += `
   jest.setTimeout(30000)
@@ -101,22 +95,22 @@ const fileContents = (recording, locationPath) => {
 
   contents += `
   it('runs the test', async () => {
-    fetch${fetchMocks(recording)}
+    fetch${fetchMocks(fetchRecords)}
     
   `
-  contents += hasUiEvents
+  contents += hasEvents
     ? `
     const { getByTestId } = render(testProvider())
     `
     : `
     await wait(() => {})`
 
-  contents += fireEvents(uiEventSteps)
-  contents += fetchCalls(fetchSteps)
+  contents += fireEvents(eventRecords)
+  contents += fetchCalls(fetchRecords)
 
   contents += `
 
-    expect(fetch).toHaveBeenCalledTimes(${fetchSteps.length})
+    expect(fetch).toHaveBeenCalledTimes(${fetchRecords.length})
 
     const screenshot = await generateImage({ viewport: { width: 1500, height: 1000 } })
     expect(screenshot).toMatchImageSnapshot()
