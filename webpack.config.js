@@ -1,10 +1,12 @@
 const path = require('path')
 
 module.exports = {
+  mode: 'production',
+  entry: './src/client/Recorder/index.jsx',
   output: {
-    filename: '[name].bundle.js',
+    filename: 'Recorder.jsx',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
+    libraryTarget: 'commonjs2',
   },
   target: 'web',
   resolve: {
@@ -26,9 +28,7 @@ module.exports = {
       },
     ],
   },
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-    },
+  externals: {
+    react: true,
   },
 }
