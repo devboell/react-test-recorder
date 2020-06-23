@@ -1,3 +1,4 @@
+const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
 const { writeTest } = require('./write-test')
@@ -6,8 +7,18 @@ const app = express()
 
 app.use(bodyParser.json())
 
+const configPath = `${process.cwd()}/recorder.config.js`
+let config = {}
+
+if (fs.existsSync(configPath)) {
+  // eslint-disable-next-line global-require, import/no-dynamic-require
+  config = require(configPath)
+}
+
+const appUrl = config.appUrl || 'http://localhost:8080'
+
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+  res.header('Access-Control-Allow-Origin', appUrl)
   res.header(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept',
