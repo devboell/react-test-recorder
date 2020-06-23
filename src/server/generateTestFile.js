@@ -63,7 +63,6 @@ const fetchCalls = (steps) => {
 const history = (path) => `
   const history = createBrowserHistory()
   history.push('${path}')
-
 `
 
 const storage = (localStorage) => {
@@ -71,10 +70,7 @@ const storage = (localStorage) => {
   `
   // eslint-disable-next-line no-restricted-syntax
   for (const [key, value] of Object.entries(localStorage)) {
-    result += `
-    localStorage.setItem(
-      '${key}',
-      '${value}')
+    result += `localStorage.setItem('${key}', '${value}')
     `
   }
   return result
