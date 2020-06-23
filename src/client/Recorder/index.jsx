@@ -12,7 +12,7 @@ import mouseTracker from './mouseTracker'
 
 const Recorder = ({ enabled, children }) => {
   const [isInitialized, setIsInitialized] = useState(false)
-  // const [locationPath] = useState(window.location.pathname)
+  const [locationPath] = useState(window.location.pathname)
   const [state, dispatch] = useReducer(reducer, initialState)
   const [fileName, setFileName] = useState('')
 
@@ -51,6 +51,8 @@ const Recorder = ({ enabled, children }) => {
       method: 'post',
       body: JSON.stringify({
         fileName,
+        locationPath,
+        localStorage,
         recording,
       }),
       headers: {

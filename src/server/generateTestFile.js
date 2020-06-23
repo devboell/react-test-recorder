@@ -66,21 +66,20 @@ const history = (path) => `
 
 `
 
-const storage = () => {
-  const accessToken = localStorage.getItem('accessToken')
-  const expirationDate = localStorage.getItem('expirationDate')
-  const userId = localStorage.getItem('userId')
-
-  return `
-  localStorage.setItem(
-    'accessToken',
-    '${accessToken}')
-  localStorage.setItem('expirationDate', '${expirationDate}')
-  localStorage.setItem('userId', '${userId}')
-
+const storage = (localStorage) => {
+  let result = `
   `
+  // eslint-disable-next-line no-restricted-syntax
+  for (const [key, value] of Object.entries(localStorage)) {
+    result += `
+    localStorage.setItem(
+      '${key}',
+      '${value}')
+    `
+  }
+  return result
 }
-const fileContents = (recording, locationPath) => {
+const fileContents = (recording, locationPath, localStorage) => {
   const { fetchRecords, eventRecords } = recording
 
   const hasEvents = eventRecords.length > 0
@@ -91,7 +90,7 @@ const fileContents = (recording, locationPath) => {
   jest.setTimeout(30000)
   `
   contents += history(locationPath)
-  contents += storage()
+  contents += storage(localStorage)
 
   contents += `
   it('runs the test', async () => {
@@ -121,4 +120,4 @@ const fileContents = (recording, locationPath) => {
   return contents
 }
 
-export default fileContents
+module.exports = fileContents
