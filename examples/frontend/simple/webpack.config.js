@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 module.exports = {
   mode: 'development',
   entry: {
-    app: './frontend/index.jsx',
+    app: './src/index.jsx',
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -15,7 +15,7 @@ module.exports = {
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
     new HtmlWebpackPlugin({
       title: 'Development',
-      template: 'frontend/index.html',
+      template: './src/index.html',
     }),
   ],
   output: {
@@ -24,7 +24,7 @@ module.exports = {
   },
   target: 'web',
   resolve: {
-    modules: ['frontend', 'node_modules'],
+    modules: ['src', 'node_modules'],
     extensions: ['*', '.js', '.jsx', '.scss'],
   },
   module: {

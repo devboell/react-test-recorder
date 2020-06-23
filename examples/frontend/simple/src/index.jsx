@@ -2,7 +2,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import Recorder from '../../../client/Recorder'
+import Recorder from '../../../../src/client/Recorder'
 
 import App from './components/App'
 
