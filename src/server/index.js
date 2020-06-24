@@ -13,6 +13,7 @@ let config = {}
 if (fs.existsSync(configPath)) {
   // eslint-disable-next-line global-require, import/no-dynamic-require
   config = require(configPath)
+  console.info('using config file', config)
 }
 
 const appUrl = config.appUrl || 'http://localhost:8080'
@@ -32,4 +33,4 @@ app.post('/recording', (req, res) => {
   res.sendStatus(200)
 })
 
-app.listen(2000, () => console.log('server listening, 2000'))
+app.listen(2000, () => console.info('server listening, 2000'))
