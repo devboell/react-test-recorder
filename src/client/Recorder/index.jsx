@@ -109,6 +109,3 @@ export default Recorder
           start
         </button>
 */
-/*
- 
-*/
