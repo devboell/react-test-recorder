@@ -17,6 +17,7 @@ const Recorder = ({ enabled, children }) => {
   const [locationPath] = useState(window.location.pathname)
   const [state, dispatch] = useReducer(reducer, initialState)
   const [filePath, setFilePath] = useState('')
+  const [description, setDescription] = useState('')
 
   let windowFetch
   let Tracker
@@ -53,6 +54,7 @@ const Recorder = ({ enabled, children }) => {
       method: 'post',
       body: JSON.stringify({
         filePath,
+        description,
         locationPath,
         localStorage,
         recording,
@@ -68,8 +70,10 @@ const Recorder = ({ enabled, children }) => {
     <RecordingPanel
       isRecording={isRecording}
       stopRecording={stopRecording}
-      setFilePath={setFilePath}
       filePath={filePath}
+      setFilePath={setFilePath}
+      description={description}
+      setDescription={setDescription}
     >
       {children}
     </RecordingPanel>

@@ -6,8 +6,10 @@ import './index.css'
 const RecordingPanel = ({
   isRecording,
   stopRecording,
-  setFilePath,
   filePath,
+  setFilePath,
+  description,
+  setDescription,
   children,
 }) => {
   return (
@@ -15,16 +17,24 @@ const RecordingPanel = ({
       <div className="recorder-container">
         {isRecording ? (
           <>
-            <input
-              type="text"
-              value={filePath}
-              onChange={(event) => setFilePath(event.target.value)}
-            />
-            <input
-              type="text"
-              value={filePath}
-              onChange={(event) => setFilePath(event.target.value)}
-            />
+            <label>
+              File path:
+              <input
+                type="text"
+                value={filePath}
+                onChange={(event) => setFilePath(event.target.value)}
+              />
+            </label>
+            <label>
+              Description:
+              <textarea
+                cols="50"
+                value={description}
+                onChange={(event) =>
+                  setDescription(event.target.value)
+                }
+              />
+            </label>
           </>
         ) : (
           'NOT RECORDING'
@@ -45,8 +55,10 @@ const RecordingPanel = ({
 RecordingPanel.propTypes = {
   isRecording: pt.bool.isRequired,
   stopRecording: pt.func.isRequired,
-  setFilePath: pt.func.isRequired,
   filePath: pt.string.isRequired,
+  setFilePath: pt.func.isRequired,
+  description: pt.string.isRequired,
+  setDescription: pt.func.isRequired,
   children: pt.node.isRequired,
 }
 
