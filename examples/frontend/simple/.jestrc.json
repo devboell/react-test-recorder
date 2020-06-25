@@ -1,0 +1,14 @@
+{
+  "automock": false,
+  "verbose": true,
+  "setupFilesAfterEnv": ["<rootDir>/config/setupFilesAfterEnv.js"],
+  "transformIgnorePatterns": ["/node_modules/.+(js|jsx)$"],
+  "transform": {
+    "^.+\\.(js|jsx)$": "babel-jest",
+    "^.+\\.(css|styl|less|sass|scss)$": "jest-css-modules-transform",
+    "\\.(jpg|jpeg|png|gif|webp|svg)$": "jest-transform-file"
+  },
+  "roots": ["<rootDir>/src/recorded-tests"],
+  "moduleDirectories": ["node_modules", "src"],
+  "testRegex": "\\.test\\.(js|jsx)$"
+}
