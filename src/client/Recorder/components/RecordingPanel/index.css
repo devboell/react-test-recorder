@@ -1,0 +1,5 @@
+.recorder-container {
+  display: inline-block;
+  border: 1px solid red;
+  padding: 5px;
+}
