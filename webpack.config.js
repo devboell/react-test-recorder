@@ -23,6 +23,10 @@ module.exports = {
         },
       },
       {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
         test: /\.(svg|png|gif|jpg|jpeg|eot|woff|ttf|otf)$/,
         use: ['file-loader?name=[name].[ext]&outputPath=assets/'],
       },
