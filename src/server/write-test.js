@@ -4,16 +4,16 @@ const fileContents = require('./generateTestFile')
 
 const writeTest = ({
   recording,
-  fileName,
+  filePath,
   locationPath,
   localStorage,
 }) => {
   const contents = fileContents(recording, locationPath, localStorage)
 
-  console.log('path.dirname', path.dirname(fileName))
-  const dirname = path.dirname(fileName)
+  console.log('path.dirname', path.dirname(filePath))
+  const dirname = path.dirname(filePath)
   fs.mkdirSync(dirname, { recursive: true })
-  fs.writeFileSync(`./${fileName}.test.js`, contents)
+  fs.writeFileSync(`./${filePath}.test.js`, contents)
 }
 
 module.exports = {

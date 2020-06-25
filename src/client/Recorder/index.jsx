@@ -5,16 +5,18 @@ import reducer, {
   toggleIsRecording,
   // clearRecording,
   initialState,
-} from './reducer'
+} from './services/reducer'
 
-import fetchIntercept from './fetchIntercept'
-import mouseTracker from './mouseTracker'
+import fetchIntercept from './services/fetchIntercept'
+import mouseTracker from './services/mouseTracker'
+
+import RecordingPanel from './components/RecordingPanel'
 
 const Recorder = ({ enabled, children }) => {
   const [isInitialized, setIsInitialized] = useState(false)
   const [locationPath] = useState(window.location.pathname)
   const [state, dispatch] = useReducer(reducer, initialState)
-  const [fileName, setFileName] = useState('')
+  const [filePath, setFilePath] = useState('')
 
   let windowFetch
   let Tracker
@@ -50,7 +52,7 @@ const Recorder = ({ enabled, children }) => {
     await window.fetch('http://localhost:2000/recording', {
       method: 'post',
       body: JSON.stringify({
-        fileName,
+        filePath,
         locationPath,
         localStorage,
         recording,
@@ -63,27 +65,14 @@ const Recorder = ({ enabled, children }) => {
 
   const { isRecording } = state
   return enabled ? (
-    <>
-      <div>
-        {isRecording ? (
-          <input
-            type="text"
-            value={fileName}
-            onChange={(event) => setFileName(event.target.value)}
-          />
-        ) : (
-          'NOT RECORDING'
-        )}
-        <button
-          type="button"
-          onClick={stopRecording}
-          disabled={!isRecording}
-        >
-          stop
-        </button>
-      </div>
+    <RecordingPanel
+      isRecording={isRecording}
+      stopRecording={stopRecording}
+      setFilePath={setFilePath}
+      filePath={filePath}
+    >
       {children}
-    </>
+    </RecordingPanel>
   ) : (
     <>{children}</>
   )
