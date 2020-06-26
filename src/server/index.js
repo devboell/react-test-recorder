@@ -22,12 +22,16 @@ const run = async () => {
 
   const resetDataStorePath = `${process.cwd()}/${resetDataStoreFile}`
 
+  let resetDataStore
   if (fs.existsSync(resetDataStorePath)) {
     // eslint-disable-next-line global-require, import/no-dynamic-require
-    const resetDataStore = require(resetDataStorePath)
+    resetDataStore = require(resetDataStorePath)
     console.info('using resetDataStore file', resetDataStorePath)
-    await resetDataStore()
   }
+
+  const getRootDir = () => config.rootDir || '.'
+
+  const rootDir = `${process.cwd()}/${getRootDir()}`
 
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', appUrl)
@@ -37,10 +41,15 @@ const run = async () => {
     )
     next()
   })
-
+  app.post('/start', async (req, res) => {
+    console.log('resetting DS')
+    await resetDataStore()
+    console.log('finished resetting DS')
+    res.sendStatus(200)
+  })
   app.post('/recording', (req, res) => {
     // console.log('req.body', JSON.stringify(req.body, null, 2))
-    writeTest(req.body)
+    writeTest(req.body, rootDir)
     res.sendStatus(200)
   })
 

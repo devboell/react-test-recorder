@@ -21,20 +21,28 @@ const Recorder = ({ enabled, children }) => {
 
   let windowFetch
   let Tracker
-  if (!isInitialized && enabled) {
-    // intercept fetch calls
-    windowFetch = window.fetch
-    window.fetch = fetchIntercept(dispatch, windowFetch)
 
-    // intercept ui events
-    Tracker = mouseTracker(dispatch)
-    document.addEventListener('click', Tracker)
+  const init = async () => {
+    if (!isInitialized && enabled) {
+      await fetch('http://localhost:2000/start', {
+        method: 'post',
+      })
 
-    // init recorder
-    setIsInitialized(true)
-    dispatch(toggleIsRecording())
+      // intercept fetch calls
+      windowFetch = window.fetch
+      window.fetch = fetchIntercept(dispatch, windowFetch)
+
+      // intercept ui events
+      Tracker = mouseTracker(dispatch)
+      document.addEventListener('click', Tracker)
+
+      // init recorder
+      setIsInitialized(true)
+      dispatch(toggleIsRecording())
+    }
   }
 
+  init()
   useEffect(() => {
     // cleanup
     return () => {
@@ -75,7 +83,7 @@ const Recorder = ({ enabled, children }) => {
       description={description}
       setDescription={setDescription}
     >
-      {children}
+      {isInitialized && children}
     </RecordingPanel>
   ) : (
     <>{children}</>

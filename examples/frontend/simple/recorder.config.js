@@ -1,4 +1,5 @@
 module.exports = {
-  appUrl: 'http://localhost:8081',
+  appUrl: 'http://localhost:8080',
   resetDataStoreFile: './resetDB.js',
+  rootDir: 'src/recorded-tests',
 }
