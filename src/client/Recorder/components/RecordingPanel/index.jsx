@@ -17,17 +17,19 @@ const RecordingPanel = ({
       <div className="recorder-container">
         {isRecording ? (
           <>
-            <label>
+            <label className="recorder-label">
               File path:
               <input
+                className="recorder-input"
                 type="text"
                 value={filePath}
                 onChange={(event) => setFilePath(event.target.value)}
               />
             </label>
-            <label>
+            <label className="recorder-label">
               Description:
               <textarea
+                className="recorder-textarea"
                 cols="50"
                 value={description}
                 onChange={(event) =>
