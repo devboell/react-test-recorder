@@ -1,0 +1,75 @@
+.editor-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.form-fields {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  gap: 20px 0px;
+  margin-left: 20px;
+  margin-top: 40px;
+}
+
+.field-label {
+  font-weight: bold;
+}
+
+.form-fields > input[type='text'] {
+  width: 250px;
+}
+
+.form-fields > input[type='number'] {
+  width: 30px;
+  text-align: right;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.form-fields > input::-webkit-outer-spin-button,
+.form-fields > input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.form-fields > input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.form-fields > select {
+  width: 60px;
+}
+
+.genres-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.genres-container > div {
+  display: grid;
+  width: 100px;
+  grid-template-columns: 5fr 3fr;
+  padding-bottom: 5px;
+  margin-right: 20px;
+}
+
+.controls {
+  text-align: right;
+  padding: 10px 40px;
+}
+
+.editor-button {
+  height: 30px;
+  padding: 0 20px;
+  color: white;
+  background-color: orange;
+  outline: none;
+  border: 1px solid gray;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.editor-button:hover {
+  background-color: rgb(235, 153, 1);
+}

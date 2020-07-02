@@ -1,29 +1,48 @@
-/* eslint-disable import/no-extraneous-dependencies */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import React, { useEffect, useState } from 'react'
 
-const App = () => {
-  const [users, setUsers] = useState([])
+import MovieTable from './components/MovieTable'
+import MovieEditor from './components/MovieEditor'
 
-  const fetchUsers = async () => {
-    const response = await fetch('http://localhost:3001/users', {
+import './index.css'
+
+const App = () => {
+  const [movies, setMovies] = useState([])
+  const [selectedMovieId, setSelectedMovieId] = useState('')
+
+  const fetchMovies = async () => {
+    const response = await fetch('http://localhost:3001/movies', {
       method: 'get',
     })
     const usersJSON = await response.json()
 
-    setUsers(usersJSON.users)
+    setMovies(usersJSON.movies)
   }
 
   useEffect(() => {
-    fetchUsers()
+    fetchMovies()
   }, [])
 
+  const saveMovie = async (values) => {
+    await fetch(`http://localhost:3001/movies/${selectedMovieId}`, {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    })
+    fetchMovies()
+  }
+  const selectedMovie = movies.find(
+    // eslint-disable-next-line no-underscore-dangle
+    (movie) => movie._id === selectedMovieId,
+  )
+
   return (
-    <ul>
-      {users.map((u) => (
-        // eslint-disable-next-line no-underscore-dangle
-        <li key={u._id}>{u.name}</li>
-      ))}
-    </ul>
+    <div className="container">
+      <MovieTable movies={movies} viewMovie={setSelectedMovieId} />
+      <MovieEditor movie={selectedMovie} saveMovie={saveMovie} />
+    </div>
   )
 }
 

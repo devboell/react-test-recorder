@@ -1,0 +1,33 @@
+table {
+  flex: 1;
+  min-width: 300px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+th {
+  text-align: left;
+
+  min-width: 60px;
+}
+
+td,
+th {
+  padding: 5px 10px;
+}
+
+button.action {
+  height: 30px;
+  padding: 0 20px;
+  background-color: white;
+  color: orange;
+  outline: none;
+  border: 1px solid gray;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.action:hover {
+  background-color: rgb(243, 243, 243);
+}
