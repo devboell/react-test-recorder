@@ -1,13 +1,12 @@
-const fileImports = (hasEvents) => {
+const fileImports = (hasEvents, testProviderImport) => {
   return `
-  /* eslint-disable sonarjs/no-duplicate-string */
   import { render,${
     hasEvents ? ' fireEvent,' : ''
-  } wait } from '@testing-library/react'  
+  } waitFor } from '@testing-library/react'  
   import { generateImage } from 'jsdom-screenshot'
-  import { testProvider } from 'testProvider'
   import { createBrowserHistory } from 'history'
- 
+  import { testProvider } from '${testProviderImport}/testProvider'
+
   `
 }
 
@@ -36,7 +35,7 @@ const fireEvents = (steps) => {
   let result = ''
   steps.forEach((step) => {
     result += `
-    await wait(() => {
+    await waitFor(() => {
       const ${testidToCamel(step.testid)} = getByTestId('${
       step.testid
     }')
@@ -75,12 +74,17 @@ const storage = (localStorage) => {
   }
   return result
 }
-const fileContents = (recording, locationPath, localStorage) => {
+const fileContents = (
+  recording,
+  locationPath,
+  localStorage,
+  testProviderImport,
+) => {
   const { fetchRecords, eventRecords } = recording
 
   const hasEvents = eventRecords.length > 0
 
-  let contents = fileImports(hasEvents)
+  let contents = fileImports(hasEvents, testProviderImport)
 
   contents += `
   jest.setTimeout(30000)
@@ -98,7 +102,8 @@ const fileContents = (recording, locationPath, localStorage) => {
     const { getByTestId } = render(testProvider())
     `
     : `
-    await wait(() => {})`
+    render(testProvider())
+    await waitFor(() => {})`
 
   contents += fireEvents(eventRecords)
   contents += fetchCalls(fetchRecords)

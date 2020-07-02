@@ -22,6 +22,7 @@ const run = async () => {
 
   const resetDataStorePath = `${process.cwd()}/${resetDataStoreFile}`
 
+  console.log('__dirname', __dirname)
   let resetDataStore
   if (fs.existsSync(resetDataStorePath)) {
     // eslint-disable-next-line global-require, import/no-dynamic-require
@@ -48,7 +49,6 @@ const run = async () => {
     res.sendStatus(200)
   })
   app.post('/recording', (req, res) => {
-    // console.log('req.body', JSON.stringify(req.body, null, 2))
     writeTest(req.body, rootDir)
     res.sendStatus(200)
   })

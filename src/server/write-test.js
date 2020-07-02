@@ -6,18 +6,27 @@ const writeTest = (
   { recording, filePath, locationPath, localStorage, description },
   rootDir,
 ) => {
-  const contents = fileContents(recording, locationPath, localStorage)
+  const recordingDir = `${rootDir}/${filePath}`
 
-  // console.log('path.dirname', path.dirname(filePath))
-  // const dirname = path.dirname(filePath)
-  const rootPath = `${rootDir}/${filePath}`
-  fs.mkdirSync(rootPath, { recursive: true })
-  fs.writeFileSync(`${rootPath}/index.test.js`, contents)
+  fs.mkdirSync(recordingDir, { recursive: true })
+
+  const testProviderImport = path.relative(
+    recordingDir,
+    `${process.cwd()}/src`,
+  )
+  const contents = fileContents(
+    recording,
+    locationPath,
+    localStorage,
+    testProviderImport,
+  )
+
+  fs.writeFileSync(`${recordingDir}/index.test.js`, contents)
   fs.writeFileSync(
-    `${rootPath}/recording.json`,
+    `${recordingDir}/recording.json`,
     JSON.stringify(recording, null, 2),
   )
-  fs.writeFileSync(`${rootPath}/description.txt`, description)
+  fs.writeFileSync(`${recordingDir}/description.txt`, description)
 }
 
 module.exports = {
