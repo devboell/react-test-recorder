@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyparser = require('body-parser')
 const cors = require('cors')
-const { MongoClient } = require('mongodb')
+const { MongoClient, ObjectId } = require('mongodb')
 
 const app = express()
 app.use(bodyparser.json())
@@ -18,9 +18,20 @@ module.exports = async (MONGO_URL, DB_NAME) => {
 
   app.get('/', (req, res) => res.send({ status: 'ok' }))
 
-  app.get('/users', async (req, res) => {
-    const users = await db.collection('users').find({}).toArray()
-    res.send({ users })
+  app.get('/movies', async (req, res) => {
+    const movies = await db.collection('movies').find({}).toArray()
+    res.send({ movies })
+  })
+
+  app.put('/movies/:id', async (req, res) => {
+    const movie = await db.collection('movies').updateOne(
+      {
+        _id: ObjectId(req.params.id),
+      },
+      { $set: req.body },
+    )
+
+    res.send({ movie })
   })
 
   return app

@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb')
 
-const users = require('./users')
+const movies = require('./movies')
 
 const url = 'mongodb://localhost:27017'
 const dbName = 'recorder-example'
@@ -12,7 +12,7 @@ const run = async () => {
   const db = client.db(dbName)
   await db.dropDatabase()
 
-  await db.collection('users').insertMany(users)
+  await db.collection('movies').insertMany(movies)
 
   client.close()
 }
