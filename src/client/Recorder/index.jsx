@@ -83,7 +83,7 @@ const Recorder = ({ enabled, children }) => {
       description={description}
       setDescription={setDescription}
     >
-      {isInitialized && children}
+      {isInitialized ? children : <div>resetting datastore</div>}
     </RecordingPanel>
   ) : (
     <>{children}</>
