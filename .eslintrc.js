@@ -9,7 +9,10 @@ module.exports = {
   rules: {
     semi: ['error', 'never'],
     'jsx-a11y/label-has-associated-control': ['off'],
-    'jsx-curly-newline': ['required'],
+    'react/jsx-curly-newline': [
+      2,
+      { multiline: 'required', singleline: 'required' },
+    ],
   },
   env: {
     browser: true,
