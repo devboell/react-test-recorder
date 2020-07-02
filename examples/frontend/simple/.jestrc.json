@@ -5,7 +5,7 @@
   "transformIgnorePatterns": ["/node_modules/.+(js|jsx)$"],
   "transform": {
     "^.+\\.(js|jsx)$": "babel-jest",
-    "^.+\\.(css|styl|less|sass|scss)$": "jest-css-modules-transform",
+    "^.+\\.css$": "jest-transform-css",
     "\\.(jpg|jpeg|png|gif|webp|svg)$": "jest-transform-file"
   },
   "roots": ["<rootDir>/src/recorded-tests"],
