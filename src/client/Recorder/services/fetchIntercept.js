@@ -1,11 +1,7 @@
-import { createFetchRecord, addFetchResponse } from './reducer'
+import { createRecord } from './reducer'
 
 export default (dispatch, windowFetch) =>
   function fetchIntercept(...args) {
-    const FetchRecord = {
-      request: args,
-    }
-    dispatch(createFetchRecord(FetchRecord))
     return new Promise((resolve, reject) => {
       windowFetch
         .apply(this, args)
@@ -17,7 +13,13 @@ export default (dispatch, windowFetch) =>
           ) {
             const cloned = response.clone()
             const json = await cloned.json()
-            dispatch(addFetchResponse({ json, url: cloned.url }))
+
+            const Record = {
+              type: 'fetch',
+              request: args,
+              response: { json, url: cloned.url },
+            }
+            dispatch(createRecord(Record))
           }
           resolve(response)
         })

@@ -8,7 +8,7 @@ import reducer, {
 } from './services/reducer'
 
 import fetchIntercept from './services/fetchIntercept'
-import mouseTracker from './services/mouseTracker'
+import eventTracker from './services/eventTracker'
 
 import RecordingPanel from './components/RecordingPanel'
 
@@ -33,8 +33,9 @@ const Recorder = ({ enabled, children }) => {
       window.fetch = fetchIntercept(dispatch, windowFetch)
 
       // intercept ui events
-      Tracker = mouseTracker(dispatch)
+      Tracker = eventTracker(dispatch)
       document.addEventListener('click', Tracker)
+      document.addEventListener('change', Tracker)
 
       // init recorder
       setIsInitialized(true)
@@ -48,15 +49,14 @@ const Recorder = ({ enabled, children }) => {
     return () => {
       window.fetch = windowFetch
       document.removeEventListener('click', Tracker)
+      document.removeEventListener('change', Tracker)
     }
   }, [])
 
   const stopRecording = async () => {
     dispatch(toggleIsRecording())
-    const recording = {
-      fetchRecords: state.fetchRecords,
-      eventRecords: state.eventRecords,
-    }
+    const recording = state.records
+
     console.log('recording stopped', recording)
     await window.fetch('http://localhost:2000/recording', {
       method: 'post',
@@ -66,6 +66,8 @@ const Recorder = ({ enabled, children }) => {
         locationPath,
         localStorage,
         recording,
+        windowWidth: window.innerWidth,
+        windowHeight: window.innerHeight,
       }),
       headers: {
         'Content-Type': 'application/json',
