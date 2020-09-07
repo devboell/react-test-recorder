@@ -48,6 +48,7 @@ const MovieEditorForm = ({ movie, saveMovie }) => {
           type="text"
           onChange={formik.handleChange}
           value={formik.values.title}
+          data-testid="titleInput"
         />
         <label className="field-label" htmlFor="year">
           Year
@@ -57,13 +58,14 @@ const MovieEditorForm = ({ movie, saveMovie }) => {
           name="year"
           value={formik.values.year}
           onChange={formik.handleChange}
+          data-testid="yearSelect"
         >
           {releaseYears.map((year) => (
             <option key={year}>{year}</option>
           ))}
         </select>
         <label className="field-label" htmlFor="rating">
-          Rating{' '}
+          Rating
         </label>
 
         <input
@@ -72,6 +74,7 @@ const MovieEditorForm = ({ movie, saveMovie }) => {
           type="number"
           onChange={formik.handleChange}
           value={formik.values.rating}
+          data-testid="ratingInput"
         />
 
         <div className="field-label">Genres</div>
@@ -86,13 +89,19 @@ const MovieEditorForm = ({ movie, saveMovie }) => {
                 onChange={formik.handleChange}
                 value={genre}
                 checked={formik.values.genres.includes(genre)}
+                data-testid={`genre-input-${genre}`}
               />
             </div>
           ))}
         </div>
       </div>
       <div className="controls">
-        <button className="editor-button" type="submit">
+        <button
+          className="editor-button"
+          type="button"
+          onClick={formik.handleSubmit}
+          data-testid="saveMovieButton"
+        >
           Save
         </button>
       </div>
