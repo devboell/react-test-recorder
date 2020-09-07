@@ -23,4 +23,8 @@ MovieEditor.propTypes = {
   saveMovie: PropTypes.func.isRequired,
 }
 
+MovieEditor.defaultProps = {
+  movie: null,
+}
+
 export default MovieEditor
