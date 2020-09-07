@@ -1,6 +1,6 @@
 {
   "name": "react-test-recorder",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Generate jest files based on recorded 'live' site navigation",
   "main": "dist/Recorder.jsx",
   "bin": {
