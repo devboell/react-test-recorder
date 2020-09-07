@@ -1,8 +1,9 @@
+const checkboxHelper = require('./checkbox-helper')
+
 const fileImports = (hasEvents, testProviderImport) => {
-  return `
-  import { render,${
+  return `import { render,${
     hasEvents ? ' fireEvent,' : ''
-  } waitFor } from '@testing-library/react'  
+  } waitFor } from '@testing-library/react' 
   import { generateImage } from 'jsdom-screenshot'
   import { createBrowserHistory } from 'history'
   import { testProvider } from '${testProviderImport}/testProvider'
@@ -21,6 +22,7 @@ const fetchMocks = (fetchRecords) => {
   }
   return result
 }
+/*
 
 const capitalize = (string) =>
   string.charAt(0).toUpperCase() + string.slice(1)
@@ -30,31 +32,49 @@ const testidToCamel = (testid) =>
     .split('-')
     .map((part, idx) => (idx === 0 ? part : capitalize(part)))
     .join('')
+*/
+const handleEvent = (step) => {
+  if (step.eventType === 'click') {
+    return `
+    fireEvent.click(getByTestId('${step.testid}'))
+    `
+  }
 
+  if (step.eventType === 'change') {
+    if (step.targetType === 'checkbox') {
+      return `${checkboxHelper(step.testid)}
+    `
+    }
+
+    return `
+    fireEvent.change(getByTestId('${step.testid}'), { target: { value: '${step.value}' } })
+    `
+  }
+  return null
+}
 const fireEvents = (steps) => {
   let result = ''
   steps.forEach((step) => {
-    result += `
-    await waitFor(() => {
-      const ${testidToCamel(step.testid)} = getByTestId('${
-      step.testid
-    }')
-      fireEvent.click(${testidToCamel(step.testid)})
-    })`
+    result +=
+      step.type === 'fetch'
+        ? `
+    await waitFor(() => {})
+    `
+        : handleEvent(step)
   })
   return result
 }
 
 const fetchCalls = (steps) => {
   let result = `
-  `
+    `
   steps.forEach((step, idx) => {
     const [url, payload] = step.request
 
-    result += `
-    expect(fetch).toHaveBeenNthCalledWith(${
+    result += `expect(fetch).toHaveBeenNthCalledWith(${
       idx + 1
-    }, '${url}', ${JSON.stringify(payload)})`
+    }, '${url}', ${JSON.stringify(payload)})
+    `
   })
   return result
 }
@@ -62,7 +82,7 @@ const fetchCalls = (steps) => {
 const history = (path) => `
   const history = createBrowserHistory()
   history.push('${path}')
-`
+  `
 
 const storage = (localStorage) => {
   let result = `
@@ -70,7 +90,7 @@ const storage = (localStorage) => {
   // eslint-disable-next-line no-restricted-syntax
   for (const [key, value] of Object.entries(localStorage)) {
     result += `localStorage.setItem('${key}', '${value}')
-    `
+  `
   }
   return result
 }
@@ -79,10 +99,12 @@ const fileContents = (
   locationPath,
   localStorage,
   testProviderImport,
+  windowWidth,
+  windowHeight,
 ) => {
-  const { fetchRecords, eventRecords } = recording
+  const fetchRecords = recording.filter((rec) => rec.type === 'fetch')
 
-  const hasEvents = eventRecords.length > 0
+  const hasEvents = recording.find((rec) => rec.type === 'event')
 
   let contents = fileImports(hasEvents, testProviderImport)
 
@@ -95,24 +117,22 @@ const fileContents = (
   contents += `
   it('runs the test', async () => {
     fetch${fetchMocks(fetchRecords)}
-    
-  `
+    `
   contents += hasEvents
     ? `
     const { getByTestId } = render(testProvider())
     `
     : `
     render(testProvider())
-    await waitFor(() => {})`
+    `
 
-  contents += fireEvents(eventRecords)
+  contents += fireEvents(recording)
   contents += fetchCalls(fetchRecords)
 
   contents += `
-
     expect(fetch).toHaveBeenCalledTimes(${fetchRecords.length})
 
-    const screenshot = await generateImage({ viewport: { width: 1500, height: 1000 } })
+    const screenshot = await generateImage({ viewport: { width: ${windowWidth}, height: ${windowHeight} } })
     expect(screenshot).toMatchImageSnapshot()
 
     fetch.resetMocks()
