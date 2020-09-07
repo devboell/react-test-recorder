@@ -1,6 +1,7 @@
 module.exports = {
   extends: ['airbnb', 'prettier'],
   plugins: ['prettier'],
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 9,
     sourceType: 'module',
@@ -9,10 +10,7 @@ module.exports = {
   rules: {
     semi: ['error', 'never'],
     'jsx-a11y/label-has-associated-control': ['off'],
-    'react/jsx-curly-newline': [
-      2,
-      { multiline: 'required', singleline: 'required' },
-    ],
+    'react/jsx-curly-newline': [2],
   },
   env: {
     browser: true,
