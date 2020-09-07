@@ -17,12 +17,10 @@ const run = async () => {
     console.info('using config file', config)
   }
 
-  const appUrl = config.appUrl || 'http://localhost:8080'
   const { resetDataStoreFile } = config
 
   const resetDataStorePath = `${process.cwd()}/${resetDataStoreFile}`
 
-  console.log('__dirname', __dirname)
   let resetDataStore
   if (fs.existsSync(resetDataStorePath)) {
     // eslint-disable-next-line global-require, import/no-dynamic-require
@@ -34,6 +32,9 @@ const run = async () => {
 
   const rootDir = `${process.cwd()}/${getRootDir()}`
 
+  // handle cors
+  const appUrl = config.appUrl || 'http://localhost:8080'
+
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', appUrl)
     res.header(
@@ -42,12 +43,16 @@ const run = async () => {
     )
     next()
   })
+
+  // reset the DS for every recording
   app.post('/start', async (req, res) => {
     console.log('resetting DS')
     await resetDataStore()
     console.log('finished resetting DS')
     res.sendStatus(200)
   })
+
+  // receive the recording and write test
   app.post('/recording', (req, res) => {
     writeTest(req.body, rootDir)
     res.sendStatus(200)
