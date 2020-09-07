@@ -1,10 +1,14 @@
 {
   "name": "react-test-recorder",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Generate jest files based on recorded 'live' site navigation",
   "main": "dist/Recorder.jsx",
   "bin": {
     "record": "src/server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devboell/react-test-recorder.git"
   },
   "scripts": {
     "build": "webpack --config webpack.config.js",
