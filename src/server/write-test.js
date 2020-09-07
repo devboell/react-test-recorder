@@ -3,7 +3,15 @@ const path = require('path')
 const fileContents = require('./generateTestFile')
 
 const writeTest = (
-  { recording, filePath, locationPath, localStorage, description },
+  {
+    recording,
+    filePath,
+    locationPath,
+    localStorage,
+    description,
+    windowWidth,
+    windowHeight,
+  },
   rootDir,
 ) => {
   const recordingDir = `${rootDir}/${filePath}`
@@ -19,6 +27,8 @@ const writeTest = (
     locationPath,
     localStorage,
     testProviderImport,
+    windowWidth,
+    windowHeight,
   )
 
   fs.writeFileSync(`${recordingDir}/index.test.js`, contents)
