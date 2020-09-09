@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server",
-    "record": "node ../../../src/server/index.js",
+    "record": "nodemon ../../../src/server/index.js",
     "test": "jest -c .jestrc.json"
   },
   "author": "",
@@ -29,6 +29,7 @@
     "jest-transform-css": "^2.0.0",
     "jest-transform-file": "^1.1.1",
     "jsdom-screenshot": "^3.2.0",
+    "nodemon": "^2.0.4",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
