@@ -99,8 +99,8 @@ const fileContents = (
   locationPath,
   localStorage,
   testProviderImport,
-  windowWidth,
-  windowHeight,
+  screenshotWidth,
+  screenshotHeight,
 ) => {
   const fetchRecords = recording.filter((rec) => rec.type === 'fetch')
 
@@ -132,7 +132,7 @@ const fileContents = (
   contents += `
     expect(fetch).toHaveBeenCalledTimes(${fetchRecords.length})
 
-    const screenshot = await generateImage({ viewport: { width: ${windowWidth}, height: ${windowHeight} } })
+    const screenshot = await generateImage({ viewport: { width: ${screenshotWidth}, height: ${screenshotHeight} } })
     expect(screenshot).toMatchImageSnapshot()
 
     fetch.resetMocks()

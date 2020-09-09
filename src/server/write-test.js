@@ -9,8 +9,8 @@ const writeTest = (
     locationPath,
     localStorage,
     description,
-    windowWidth,
-    windowHeight,
+    screenshotWidth,
+    screenshotHeight,
   },
   rootDir,
 ) => {
@@ -22,13 +22,15 @@ const writeTest = (
     recordingDir,
     `${process.cwd()}/src`,
   )
+
+  console.log('screenshotWidth', screenshotWidth)
   const contents = fileContents(
     recording,
     locationPath,
     localStorage,
     testProviderImport,
-    windowWidth,
-    windowHeight,
+    screenshotWidth,
+    screenshotHeight,
   )
 
   fs.writeFileSync(`${recordingDir}/index.test.js`, contents)

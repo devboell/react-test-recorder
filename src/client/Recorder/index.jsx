@@ -58,6 +58,14 @@ const Recorder = ({ enabled, children }) => {
     const recording = state.records
 
     console.log('recording stopped', recording)
+    console.log(
+      'recording document.body.scrollWidth',
+      document.body.scrollWidth,
+    )
+    console.log(
+      'recording document.body.scrollHeight',
+      document.body.scrollHeight,
+    )
     await window.fetch('http://localhost:2000/recording', {
       method: 'post',
       body: JSON.stringify({
@@ -66,8 +74,8 @@ const Recorder = ({ enabled, children }) => {
         locationPath,
         localStorage,
         recording,
-        windowWidth: window.innerWidth,
-        windowHeight: window.innerHeight,
+        screenshotWidth: document.body.scrollWidth,
+        screenshotHeight: document.body.scrollHeight,
       }),
       headers: {
         'Content-Type': 'application/json',
