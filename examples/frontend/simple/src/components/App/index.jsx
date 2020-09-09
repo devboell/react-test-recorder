@@ -39,9 +39,18 @@ const App = () => {
   )
 
   return (
-    <div className="container">
-      <MovieTable movies={movies} viewMovie={setSelectedMovieId} />
-      <MovieEditor movie={selectedMovie} saveMovie={saveMovie} />
+    <div>
+      <div className="movie-container">
+        <MovieTable movies={movies} viewMovie={setSelectedMovieId} />
+        <MovieEditor movie={selectedMovie} saveMovie={saveMovie} />
+      </div>
+      <div className="page-filler">
+        <p>Lorem ipsum...</p>
+        <p>Pellentesque interdum...</p>
+        <p>Nullam fermentumm...</p>
+        <p>Aliquam in sem dolor....</p>
+        <p>Pellentesque luctus...</p>
+      </div>
     </div>
   )
 }

@@ -1,4 +1,19 @@
-.container {
+.movie-container {
   display: flex;
   flex-wrap: wrap;
+}
+
+.page-filler {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  margin-top: 20px;
+  height: 800px;
+  background-color: blanchedalmond;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.page-filler p {
+  padding: 10px;
 }
