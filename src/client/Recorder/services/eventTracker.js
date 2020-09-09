@@ -15,7 +15,7 @@ export default (dispatch) => (event) => {
   const { type: eventType } = event
 
   const Element = findElementWithTestId(event.target)
-  console.log('we have an event', event)
+  console.log('we have an Element', Element)
 
   if (Element)
     dispatch(
